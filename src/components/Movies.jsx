@@ -4,11 +4,11 @@ export function Movies({
   released,
   director,
   favorite,
-  onFavoriteChange,
+  onToggleFavorite,
   onMovieDelete,
 }) {
   function handleFavorite() {
-    onFavoriteChange(favorite ? false : true);
+    onToggleFavorite(favorite ? false : true);
   }
   function handleDeleteMovie() {
     onMovieDelete(title);
