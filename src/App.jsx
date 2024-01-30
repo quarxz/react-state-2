@@ -1,35 +1,97 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import { Movies } from "./components/Movies";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [movies, setMovies] = useState([
+    {
+      id: 1,
+      title: "Titanic",
+      released: "1997",
+      director: "James Cameron",
+      favorite: false,
+    },
+    {
+      id: 2,
+      title: "The Naked Gun",
+      released: "1988",
+      director: "David Zucker",
+      favorite: true,
+    },
+    {
+      id: 3,
+      title: "Das Böse unter der Sonne",
+      released: "1982",
+      director: "Guy Hamilton",
+      favorite: true,
+    },
+
+    {
+      id: 5,
+      title: "Sherlock Holmes",
+      released: "2009",
+      director: "Guy Ritchie",
+      favorite: true,
+    },
+
+    {
+      id: 6,
+      title: "Barbie",
+      released: "2023",
+      director: "Greta Gerwig",
+      favorite: false,
+    },
+  ]);
+
+  function handleFavoriteChange(id, newFavoriteStatus) {
+    setMovies(
+      movies.map((movie) => {
+        if (movie.id === id) {
+          return {
+            ...movie,
+            favorite: newFavoriteStatus,
+          };
+        } else {
+          return movie;
+        }
+      })
+    );
+  }
+
+  function handleDeleteMovie(movieTitle) {
+    setMovies(
+      movies.filter((movie) => {
+        return movie.title !== movieTitle;
+      })
+    );
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <h1>Movies List</h1>
+      </header>
+      <main>
+        {movies.map((movie) => {
+          return (
+            <Movies
+              key={movie.id}
+              onFavoriteChange={(newFavoriteStatus) => {
+                handleFavoriteChange(movie.id, newFavoriteStatus);
+              }}
+              onMovieDelete={(movieTitle) => {
+                handleDeleteMovie(movieTitle);
+              }}
+              title={movie.title}
+              released={movie.released}
+              director={movie.director}
+              favorite={movie.favorite}
+            />
+          );
+        })}
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,0 +1,65 @@
+section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  border: 1px dotted #999;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  /* min-width: 350px;
+  max-width: 380px; */
+  width: 320px;
+}
+
+section:hover {
+  background-color: rgba(153, 153, 153, 0.1);
+}
+
+section h2,
+section p {
+  text-align: left;
+  margin: 10px;
+}
+
+section button {
+  margin-top: 20px;
+}
+
+.icon {
+  position: absolute;
+  right: 40px;
+  bottom: 23px;
+  font-size: 30px;
+  display: none;
+  color: rgba(255, 0, 0, 0.74);
+  /* color: #999; */
+}
+
+.show--icon {
+  display: inline-block;
+}
+
+span.btn-delete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 5px 10px;
+}
+span.btn-delete {
+  cursor: pointer;
+}
+
+svg.highlight {
+  margin: 0.2rem;
+  width: 15px;
+  height: 15px;
+  stroke-width: 5;
+  stroke: #999;
+}
+
+svg.highlight:hover {
+  stroke-width: 5;
+  stroke: white;
+}
