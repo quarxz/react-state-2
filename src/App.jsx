@@ -1,49 +1,45 @@
 import { useState } from "react";
-import "./App.css";
+import styles from "./App.module.css";
 import { Movies } from "./components/Movies";
+import { MovieForm } from "./components/MovieForm";
+
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [movies, setMovies] = useState([
     {
-      id: 1,
+      id: uuidv4(),
       title: "Titanic",
       released: "1997",
       director: "James Cameron",
       favorite: false,
     },
     {
-      id: 2,
+      id: uuidv4(),
       title: "The Naked Gun",
       released: "1988",
       director: "David Zucker",
       favorite: true,
     },
     {
-      id: 3,
-      title: "Das Böse unter der Sonne",
+      id: uuidv4(),
+      title: "Evil under the sun",
       released: "1982",
       director: "Guy Hamilton",
       favorite: true,
     },
 
     {
-      id: 5,
+      id: uuidv4(),
       title: "Sherlock Holmes",
       released: "2009",
       director: "Guy Ritchie",
       favorite: true,
     },
-
-    {
-      id: 6,
-      title: "Barbie",
-      released: "2023",
-      director: "Greta Gerwig",
-      favorite: false,
-    },
   ]);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
-  function handleFavoriteChange(id, newFavoriteStatus) {
+  function handleToggleFavorite(id, newFavoriteStatus) {
     setMovies(
       movies.map((movie) => {
         if (movie.id === id) {
@@ -57,7 +53,7 @@ function App() {
       })
     );
   }
-
+  // delete
   function handleDeleteMovie(movieTitle) {
     setMovies(
       movies.filter((movie) => {
@@ -65,19 +61,37 @@ function App() {
       })
     );
   }
+  // create
+  function handleMovie(newMovie) {
+    setMovies([
+      { ...newMovie, id: uuidv4(), isFavorite: false },
+      ...movies,
+    ]);
+    setIsFormOpen(false);
+  }
 
   return (
     <>
       <header>
         <h1>Movies List</h1>
       </header>
+      <div className={styles["header-box"]}>
+        <button
+          onClick={() => {
+            setIsFormOpen((prevIsFormOpen) => !prevIsFormOpen);
+          }}
+        >
+          {isFormOpen ? "Cancel" : "Add Movie"}
+        </button>
+      </div>
+      {isFormOpen ? <MovieForm onAddMovie={handleMovie} /> : <></>}
       <main>
         {movies.map((movie) => {
           return (
             <Movies
               key={movie.id}
-              onFavoriteChange={(newFavoriteStatus) => {
-                handleFavoriteChange(movie.id, newFavoriteStatus);
+              onToggleFavorite={(newFavoriteStatus) => {
+                handleToggleFavorite(movie.id, newFavoriteStatus);
               }}
               onMovieDelete={(movieTitle) => {
                 handleDeleteMovie(movieTitle);
@@ -90,6 +104,7 @@ function App() {
           );
         })}
       </main>
+      {/* <p>{JSON.stringify(movies)}</p> */}
     </>
   );
 }
