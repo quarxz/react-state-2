@@ -43,7 +43,7 @@ function App() {
     },
   ]);
 
-  function handleFavoriteChange(id, newFavoriteStatus) {
+  function handleToggleFavorite(id, newFavoriteStatus) {
     setMovies(
       movies.map((movie) => {
         if (movie.id === id) {
@@ -76,8 +76,8 @@ function App() {
           return (
             <Movies
               key={movie.id}
-              onFavoriteChange={(newFavoriteStatus) => {
-                handleFavoriteChange(movie.id, newFavoriteStatus);
+              onToggleFavorite={(newFavoriteStatus) => {
+                handleToggleFavorite(movie.id, newFavoriteStatus);
               }}
               onMovieDelete={(movieTitle) => {
                 handleDeleteMovie(movieTitle);
